@@ -1,11 +1,12 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/hUnPAC5R)
-# Nombre del juego (<- borrar y completar)
+# Shove It! Wollok version
 
 ## Equipo de desarrollo
 
-- Alguien
-- Persona
-- etc.
+- Arce Emanuel
+- Di Tucci Sebastian
+- Sebok Rodrigo
+- Seoane Magali
 
 ## Capturas
 
