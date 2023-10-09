@@ -1,12 +1,14 @@
 import wollok.game.*
-import pepita.*
+import shove.*
+import configuraciones.*
+import obstaculos.*
 
 program juego {
 	game.title("Juego Base")
-	game.addVisual(pepita)
+	game.addVisual(shove)
+	game.addVisual(new Caja())
 	game.width(10)
 	game.height(10)
-	pepita.configurarTeclas()
-	game.onCollideDo(pepita, {el => el.mover(pepita.position())})
+	configuracion.teclas()
 	game.start()
 }
