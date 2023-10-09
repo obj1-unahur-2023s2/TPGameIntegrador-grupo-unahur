@@ -4,5 +4,9 @@ import pepita.*
 program juego {
 	game.title("Juego Base")
 	game.addVisual(pepita)
+	game.width(10)
+	game.height(10)
+	pepita.configurarTeclas()
+	game.onCollideDo(pepita, {el => el.mover(pepita.position())})
 	game.start()
 }
