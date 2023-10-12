@@ -1,14 +1,9 @@
 import wollok.game.*
 import shove.*
 import configuraciones.*
-import obstaculos.*
+import objetos.*
 
-program juego {
-	game.title("Juego Base")
-	game.addVisual(shove)
-	game.addVisual(new Caja())
-	game.width(10)
-	game.height(10)
-	configuracion.teclas()
+program iniciar {
+	juego.configurar()
 	game.start()
 }
