@@ -8,7 +8,11 @@ object juego {
 		game.width(15)
 	    game.height(15)
 		shove.iniciar()
-		game.addVisual(new Caja(position = game.at(3,5)))
+		const caja = new Caja(position = game.at(3,5))
+		game.addVisual(caja)
+		const objetivo = new Objetivo (position = game.at (4,1))
+		game.addVisual(objetivo)
+		caja.iniciar()
 		game.start()
 	}
 }

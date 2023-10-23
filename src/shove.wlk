@@ -40,5 +40,6 @@ object shove {
 		else { image="abajo empujando caja.png"	}				
 	}
 	method empujarCaja() { game.onCollideDo(self, {el => el.serEmpujado() self.direccionEmpujando() self.position(position)}) }
+	
 }
 
