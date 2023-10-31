@@ -39,7 +39,8 @@ object shove {
 		else if(direccionActual == "arriba") { image = "arriba empujando caja.png" }
 		else { image="abajo empujando caja.png"	}				
 	}
-	method empujarCaja() { game.onCollideDo(self, {el => el.serEmpujado() self.direccionEmpujando() self.position(position)}) }
-	
+	method empujarCaja() { game.onCollideDo(self, {el => el.serEmpujado() self.direccionEmpujando() }) }
+	method despintarCaja(){}
+	method pintarCaja(){}
 }
 
