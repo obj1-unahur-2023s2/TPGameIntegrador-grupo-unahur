@@ -1,10 +1,11 @@
 import wollok.game.*
 import objetos.*
+import direcciones.*
 
 object shove {
 	var property position = game.center()
 	var property image = "derecha sin empujar caja.png"
-	var direccionActual = "izquierda"
+	var property direccionActual = izquierda
 	method iniciar() {
 		game.addVisual(self)
 		self.configurarTeclas()
@@ -13,19 +14,19 @@ object shove {
 	method direccionActual() = direccionActual
 	method moverDerecha(){ position = position.right(1)
 		image="derecha sin empujar caja.png"
-		direccionActual = "derecha"
+		direccionActual = derecha
 	}
 	method moverIzquierda(){ position = position.left(1)
 		image="izquierda sin empujar caja.png"
-		direccionActual = "izquierda"
+		direccionActual = izquierda
 	}
 	method moverArriba(){ position = position.up(1) 
 		image="arriba sin empujar caja.png"
-		direccionActual = "arriba"
+		direccionActual = arriba
 	}
 	method moverAbajo(){ position = position.down(1) 
 		image="abajo sin empujar caja.png"
-		direccionActual = "abajo"
+		direccionActual = abajo
 	}
 	method configurarTeclas(){
 		keyboard.left().onPressDo{self.moverIzquierda()}
@@ -34,10 +35,10 @@ object shove {
 		keyboard.down().onPressDo{self.moverAbajo()}
 	}
 	method direccionEmpujando(){
-		if (direccionActual == "derecha") { image = "derecha empujando caja.png" }
-		else if(direccionActual == "izquierda") { image = "izquierda empujando caja.png" }
-		else if(direccionActual == "arriba") { image = "arriba empujando caja.png" }
-		else { image="abajo empujando caja.png"	}				
+		if (direccionActual.esIgual(derecha)) { image = "derecha empujando caja.png" }
+		else if (direccionActual.esIgual(izquierda)) { image = "izquierda empujando caja.png" }
+		else if(direccionActual.esIgual(arriba)) { image = "arriba empujando caja.png" }
+		else { image = "abajo empujando caja.png" }				
 	}
 	method empujarCaja() { game.onCollideDo(self, {el => el.serEmpujado() self.direccionEmpujando() }) }
 	method despintarCaja(){}
