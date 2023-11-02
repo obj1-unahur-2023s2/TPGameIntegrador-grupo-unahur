@@ -5,7 +5,7 @@ import direcciones.*
 object shove {
 	var property position = game.center()
 	var property image = "derecha sin empujar caja.png"
-	var property direccionActual = izquierda
+	var property direccionActual 
 	method iniciar() {
 		game.addVisual(self)
 		self.configurarTeclas()
@@ -40,8 +40,15 @@ object shove {
 		else if(direccionActual.esIgual(arriba)) { image = "arriba empujando caja.png" }
 		else { image = "abajo empujando caja.png" }				
 	}
+	method shoveRebotar() { 
+		if (direccionActual.esIgual(derecha)) { position = position.left(1) }
+		else if (direccionActual.esIgual(izquierda)) { position = position.right(1) }
+		else if (direccionActual.esIgual(arriba)) { position = position.down(1) }
+		else { position = position.up(1) } 
+	}          
 	method empujarCaja() { game.onCollideDo(self, {el => el.serEmpujado() self.direccionEmpujando() }) }
 	method despintarCaja(){}
 	method pintarCaja(){}
+	method rebotar(){}
 }
 
