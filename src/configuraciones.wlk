@@ -1,6 +1,7 @@
 import shove.*
 import objetos.*
 import wollok.game.*
+import niveles.*
 
 object juego {
 	method configurar(){
@@ -34,6 +35,7 @@ object juego {
 		game.addVisual(caja1)
 		ladrillo1.iniciar()
 		objetivo1.iniciar()
+		nivelUno.iniciar()
 		game.start()
 	}
 }

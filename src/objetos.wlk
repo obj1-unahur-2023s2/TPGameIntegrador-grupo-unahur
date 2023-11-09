@@ -11,6 +11,35 @@ class Ladrillo inherits Objeto {
 	method image() = "Ladrillo.png"
 	method noDejarPasar() { game.onCollideDo(self, {sc => sc.rebotar() shove.shoveRebotar()})}
 	method iniciar() { self.noDejarPasar() } 
+	
+}
+
+
+
+class Objetivo inherits Objeto {
+	var property image = "objetivo (punto).png"
+	method cambiarColorDeCaja() { game.onCollideDo(self, {c => c.pintarCaja() }) }
+	method pintarCaja(){}
+	method aniadirInvisibles() { 
+		const invisibles = []
+		if (game.getObjectsIn(position.left(1)).size() == 0) { invisibles.add(new Invisible(position = position.left(1))) }
+		if (game.getObjectsIn(position.right(1)).size() == 0) { invisibles.add(new Invisible(position = position.right(1))) }
+		if (game.getObjectsIn(position.up(1)).size() == 0) { invisibles.add(new Invisible(position = position.up(1))) }
+		if (game.getObjectsIn(position.down(1)).size() == 0) { invisibles.add(new Invisible(position = position.down(1)))}
+		invisibles.forEach({i =>
+			game.addVisual(i)
+			i.iniciar()
+		})
+	}       
+	method iniciar() { 
+		self.aniadirInvisibles()
+		self.cambiarColorDeCaja()
+	}
+}
+
+class Invisible inherits Objeto {
+	method cambiarColorDeCaja() { game.onCollideDo(self, {c => c.despintarCaja()}) }
+	method iniciar() { self.cambiarColorDeCaja() }
 }
 
 class Caja inherits Objeto {
@@ -45,27 +74,5 @@ class Caja inherits Objeto {
 }
 
 
-class Objetivo inherits Objeto {
-	var property image = "objetivo (punto).png"
-	method cambiarColorDeCaja() { game.onCollideDo(self, {c => c.pintarCaja() }) }
-	method aniadirInvisibles() { 
-		const invisibles = []
-		if (game.getObjectsIn(position.left(1)).size() == 0) { invisibles.add(new Invisible(position = position.left(1))) }
-		if (game.getObjectsIn(position.right(1)).size() == 0) { invisibles.add(new Invisible(position = position.right(1))) }
-		if (game.getObjectsIn(position.up(1)).size() == 0) { invisibles.add(new Invisible(position = position.up(1))) }
-		if (game.getObjectsIn(position.down(1)).size() == 0) { invisibles.add(new Invisible(position = position.down(1)))}
-		invisibles.forEach({i =>
-			game.addVisual(i)
-			i.iniciar()
-		})
-	}       
-	method iniciar() { 
-		self.aniadirInvisibles()
-		self.cambiarColorDeCaja()
-	}
-}
 
-class Invisible inherits Objeto {
-	method cambiarColorDeCaja() { game.onCollideDo(self, {c => c.despintarCaja()}) }
-	method iniciar() { self.cambiarColorDeCaja() }
-}
+		
