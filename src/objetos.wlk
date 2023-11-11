@@ -14,7 +14,8 @@ class Ladrillo inherits Objeto {
     override method iniciar() { 
     	super()
     	self.noDejarPasar()
-    } 
+    }
+    method rebotar(){} 
 }
 
 class Objetivo inherits Objeto {
@@ -47,6 +48,7 @@ class Invisible inherits Objeto {
 class Caja inherits Objeto {
 	var property image = "caja sin pintar.png" 
 	var direccionActual = izquierda
+	method direccionActual()=direccionActual
 	override method serEmpujado(){
 		if (shove.direccionActual().esIgual(derecha)) { 
 			position = position.right(1)
