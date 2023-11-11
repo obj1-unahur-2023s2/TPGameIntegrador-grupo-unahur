@@ -1,54 +1,44 @@
 import wollok.game.*
-
 import shove.*
 import objetos.*
 
-
-
 object nivelUno{
+	const ladrillos = []
+	const cajas = []
+	const objetivos = []
 	
-	method agregarLadrillos(y){
-		const ladrillos=[]
-		(1..4).forEach{x=>ladrillos.add (new Ladrillo (position=game.at(x,y)))}
-		ladrillos.forEach{x=>x.iniciar()}
-		
+	method agregarFilaDeLadrillos(desde, hasta , y){ (desde..hasta).forEach({x => ladrillos.add(new Ladrillo(position = game.at(x,y)))}) }
+	method agregarColumnaDeLadrillos(desde, hasta , x) { (desde..hasta).forEach({y => ladrillos.add(new Ladrillo(position = game.at(x,y)))}) }
+	
+	method agregarLadrillos() {
+		self.agregarColumnaDeLadrillos(4, 10, 1)
+		self.agregarColumnaDeLadrillos(4, 10, 13)
+		self.agregarFilaDeLadrillos(2, 12, 4)
+		self.agregarFilaDeLadrillos(2, 12, 10)
+		ladrillos.forEach({l => l.iniciar()})
 	}
-
+	
 	method agregarCajas(){
-		const  cajas = []
-		
+		cajas.add (new Caja(position= game.at(3,9)))
+		cajas.add (new Caja(position= game.at(11,9)))
 		cajas.add (new Caja(position= game.at(3,5)))
-		cajas.add (new Caja(position= game.at(5,5)))
-		cajas.add (new Caja(position= game.at(2,5)))
+		cajas.add (new Caja(position= game.at(11,5)))
 		cajas.forEach({x=>x.iniciar()})	
-		
 	}
 	method agregarObjetivos(){
-		const obj=[]
-		
-		obj.add(new Objetivo(position =game.at (2,2)))
-		obj.add(new Objetivo(position =game.at (2,2)))
-		obj.add(new Objetivo(position =game.at (2,2)))
-		obj.forEach{x=>x.iniciar()}
-		
+		objetivos.add(new Objetivo(position =game.at (2,9)))
+		objetivos.add(new Objetivo(position =game.at (2,5)))
+		objetivos.add(new Objetivo(position =game.at (12,5)))
+		objetivos.add(new Objetivo(position =game.at (12,9)))
+		objetivos.forEach{x=>x.iniciar()}
 	}
-	method iniciarVisuales(){
-		const caja= new Caja(position =game.at(3,3))
-		game.addVisual(caja)
-		game.ground("fondo.png")
-	}
-
 	
 	method iniciar(){
 		shove.iniciar()
-	//	self.iniciarVisuales()
-		//self.agregarLadrillos(3)
+		self.agregarLadrillos()
+		self.agregarObjetivos()
 		self.agregarCajas()
-		//self.agregarObjetivos()
-
-		
-	
-	}
+   }
 		
 		
 	}
