@@ -10,12 +10,11 @@ class Objeto{
 
 class Ladrillo inherits Objeto { 
 	method image() = "Ladrillo.png"
-	method noDejarPasar() { game.onCollideDo(self, {sc => sc.rebotar() shove.shoveRebotar()})}
+	method noDejarPasar() { game.onCollideDo(self, {c => c.rebotar() shove.shoveRebotar()})}
     override method iniciar() { 
     	super()
     	self.noDejarPasar()
     }
-    method rebotar(){} 
 }
 
 class Objetivo inherits Objeto {
@@ -39,6 +38,7 @@ class Objetivo inherits Objeto {
 
 class Invisible inherits Objeto {
 	method cambiarColorDeCaja() { game.onCollideDo(self, {c => c.despintarCaja()}) }
+	method image() = "fondo.png"
     override method iniciar() { 
     	super()
     	self.cambiarColorDeCaja()
@@ -47,27 +47,29 @@ class Invisible inherits Objeto {
 
 class Caja inherits Objeto {
 	var property image = "caja sin pintar.png" 
-	var direccionActual = izquierda
-	method direccionActual()=direccionActual
+	var property direccionActual = shove.direccionActual()
 	override method serEmpujado(){
 		if (shove.direccionActual().esIgual(derecha)) { 
 			position = position.right(1)
-			direccionActual = derecha
 		}
 		else if (shove.direccionActual().esIgual(izquierda)) { 
 			position = position.left(1)
-			direccionActual = izquierda
 		}
 		else if (shove.direccionActual().esIgual(abajo))  { 
 			position = position.down(1)
-			direccionActual = abajo
 		}
 		else { 
 			position = position.up(1)
-			direccionActual = arriba
 		}	
 	}	
-
+	method noSePuedenMover() { if (self.hayMuchasCajas()) { shove.shoveRebotar() } else { self.serEmpujado() }}
+	method hayMuchasCajas() = shove.direccionActual().esIgual(direccionActual) and game.getObjectsIn(self.posicionSiguiente()).any({el => el.image() == image})
+	method posicionSiguiente() {
+		if (direccionActual.esIgual(derecha)) { return position.right(1) }
+		else if (direccionActual.esIgual(izquierda)) { return position.left(1) }
+		else if (direccionActual.esIgual(arriba)) { return position.up(1) }
+		else { return position.down(1) }
+	}
 	method pintarCaja() { self.image("caja pintada.png") }
 	method despintarCaja() { self.image("caja sin pintar.png") }        
 	method rebotar() { 
@@ -75,7 +77,7 @@ class Caja inherits Objeto {
 		else if (direccionActual.esIgual(izquierda)) { position = position.right(1) }
 		else if (direccionActual.esIgual(arriba)) { position = position.down(1) }
 		else { position = position.up(1) } 
-	}           
+	}     
 }
 
 

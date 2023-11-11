@@ -40,9 +40,9 @@ object nivelUno{
 	}
 	
 	method iniciar(){
-		shove.iniciar()
 		self.agregarLadrillos()
 		self.agregarObjetivos()
+		shove.iniciar()
 		self.agregarCajas()
    }
 		

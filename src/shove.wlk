@@ -5,16 +5,16 @@ import direcciones.*
 object shove {
 	var property position = game.center()
 	var property image = "derecha sin empujar caja.png"
-	var property direccionActual 
+	var property direccionActual = derecha
 	method iniciar() {
 		game.addVisual(self)
 		self.configurarTeclas()
 		self.empujarCaja()
 	}
-	method direccionActual() = direccionActual
 	method moverDerecha(){ position = position.right(1)
 		image="derecha sin empujar caja.png"
 		direccionActual = derecha
+		
 	}
 	method moverIzquierda(){ position = position.left(1)
 		image="izquierda sin empujar caja.png"
@@ -35,7 +35,7 @@ object shove {
 		keyboard.down().onPressDo{self.moverAbajo()}
 	}
 	method direccionEmpujando(){
-		if (direccionActual.esIgual(derecha)) { image = "derecha empujando caja.png" }
+		if (direccionActual.esIgual(derecha)) { image = "derecha empujando caja.png"}
 		else if (direccionActual.esIgual(izquierda)) { image = "izquierda empujando caja.png" }
 		else if(direccionActual.esIgual(arriba)) { image = "arriba empujando caja.png" }
 		else { image = "abajo empujando caja.png" }				
@@ -46,7 +46,12 @@ object shove {
 		else if (direccionActual.esIgual(arriba)) { position = position.down(1) }
 		else { position = position.up(1) } 
 	}          
-	method empujarCaja() { game.onCollideDo(self, {el => el.serEmpujado() self.direccionEmpujando() }) }
+	method empujarCaja() { 
+		game.onCollideDo(self, {el => 
+			if(el.image() == "caja sin pintar.png" or el.image() == "caja pintada.png"){
+				el.direccionActual(direccionActual) self.direccionEmpujando() el.noSePuedenMover()
+	        }}) 
+    }
 	method despintarCaja(){}
 	method pintarCaja(){}
 	method rebotar(){}
