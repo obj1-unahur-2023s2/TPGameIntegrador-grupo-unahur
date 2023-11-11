@@ -5,19 +5,20 @@ import direcciones.*
 class Objeto{
 	var property position
 	method serEmpujado(){}
+	
 }
 
 class Ladrillo inherits Objeto { 
 	method image() = "Ladrillo.png"
 	method noDejarPasar() { game.onCollideDo(self, {sc => sc.rebotar() shove.shoveRebotar()})}
-	method iniciar() { self.noDejarPasar() } 
+method iniciar() { self.noDejarPasar() } 
 	
 }
 
 
 
 class Objetivo inherits Objeto {
-	var property image = "objetivo (punto).png"
+	var property image =  "objetivo (punto).png"
 	method cambiarColorDeCaja() { game.onCollideDo(self, {c => c.pintarCaja() }) }
 	method pintarCaja(){}
 	method aniadirInvisibles() { 
@@ -31,7 +32,7 @@ class Objetivo inherits Objeto {
 			i.iniciar()
 		})
 	}       
-	method iniciar() { 
+method iniciar() { 
 		self.aniadirInvisibles()
 		self.cambiarColorDeCaja()
 	}
@@ -39,7 +40,7 @@ class Objetivo inherits Objeto {
 
 class Invisible inherits Objeto {
 	method cambiarColorDeCaja() { game.onCollideDo(self, {c => c.despintarCaja()}) }
-	method iniciar() { self.cambiarColorDeCaja() }
+method iniciar() { self.cambiarColorDeCaja() }
 }
 
 class Caja inherits Objeto {
@@ -63,8 +64,9 @@ class Caja inherits Objeto {
 			direccionActual = arriba
 		}	
 	}	
+
 	method pintarCaja() { self.image("caja pintada.png") }
-	method despintarCaja() { self.image("caja sin pintar.png") }         
+	method despintarCaja() { self.image("caja sin pintar.png") }        
 	method rebotar() { 
 		if (direccionActual.esIgual(derecha)) { position = position.left(1) }
 		else if (direccionActual.esIgual(izquierda)) { position = position.right(1) }
