@@ -11,13 +11,12 @@ object juego {
 		game.width(15)
 	    game.height(15)
 	    inicio.iniciar()
-<<<<<<< HEAD
-	    menuPausa.iniciar()
-		game.start()
-=======
+		menuPausa.iniciar()
 	    game.start()
->>>>>>> branch 'master' of https://github.com/obj1-unahur-2023s2/TPGameIntegrador-grupo-unahur.git
-	}
+		game.start()
+
+}
+
 }
 
 
