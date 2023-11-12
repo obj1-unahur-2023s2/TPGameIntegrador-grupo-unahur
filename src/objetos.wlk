@@ -10,11 +10,6 @@ class Objeto{
 
 class Ladrillo inherits Objeto { 
 	method image() = "Ladrillo.png"
-	method noDejarPasar() { game.onCollideDo(self, {c => c.rebotar() shove.shoveRebotar()})}
-    override method iniciar() { 
-    	super()
-    	self.noDejarPasar()
-    }
 }
 
 class Objetivo inherits Objeto {
@@ -48,21 +43,24 @@ class Invisible inherits Objeto {
 class Caja inherits Objeto {
 	var property image = "caja sin pintar.png" 
 	var property direccionActual = shove.direccionActual()
-	override method serEmpujado(){
-		if (shove.direccionActual().esIgual(derecha)) { 
+		override method serEmpujado(){
+		if (shove.direccionActual().esIgual(derecha) and not self.hayLadrilloHaciaCaja(position.right(1))) {
 			position = position.right(1)
 		}
-		else if (shove.direccionActual().esIgual(izquierda)) { 
+		else if (shove.direccionActual().esIgual(izquierda) and not self.hayLadrilloHaciaCaja(position.left(1))) { 
 			position = position.left(1)
 		}
-		else if (shove.direccionActual().esIgual(abajo))  { 
+		else if (shove.direccionActual().esIgual(abajo) and not self.hayLadrilloHaciaCaja(position.down(1)))  { 
 			position = position.down(1)
 		}
-		else { 
+		else if (shove.direccionActual().esIgual(arriba) and not self.hayLadrilloHaciaCaja(position.up(1))){
 			position = position.up(1)
 		}	
+		else { shove.rebotar() }
+		
 	}	
-	method noSePuedenMover() { if (self.hayMuchasCajas()) { shove.shoveRebotar() } else { self.serEmpujado() }}
+	method hayLadrilloHaciaCaja(direccion) = game.getObjectsIn(direccion).any({l => l.image() == "Ladrillo.png"})
+	method noSePuedenMover() { if (self.hayMuchasCajas() or self.hayLadrilloHaciaCaja(self.posicionSiguiente())) { shove.shoveRebotar() } else { self.serEmpujado() }}
 	method hayMuchasCajas() = shove.direccionActual().esIgual(direccionActual) and game.getObjectsIn(self.posicionSiguiente()).any({el => el.image() == image})
 	method posicionSiguiente() {
 		if (direccionActual.esIgual(derecha)) { return position.right(1) }
@@ -70,14 +68,15 @@ class Caja inherits Objeto {
 		else if (direccionActual.esIgual(arriba)) { return position.up(1) }
 		else { return position.down(1) }
 	}
+	method posicionAnterior() {
+		if (direccionActual.esIgual(derecha)) { return position.left(1) }
+		else if (direccionActual.esIgual(izquierda)) { return position.right(1) }
+		else if (direccionActual.esIgual(arriba)) { return position.down(1) }
+		else { return position.up(1) } 
+	}
 	method pintarCaja() { self.image("caja pintada.png") }
 	method despintarCaja() { self.image("caja sin pintar.png") }        
-	method rebotar() { 
-		if (direccionActual.esIgual(derecha)) { position = position.left(1) }
-		else if (direccionActual.esIgual(izquierda)) { position = position.right(1) }
-		else if (direccionActual.esIgual(arriba)) { position = position.down(1) }
-		else { position = position.up(1) } 
-	}     
+	method rebotar() { position = self.posicionAnterior() }     
 }
 
 
