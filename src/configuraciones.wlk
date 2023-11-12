@@ -11,7 +11,7 @@ object juego {
 		game.width(15)
 	    game.height(15)
 	    inicio.iniciar()
-		game.start()
+	    game.start()
 	}
 }
 
