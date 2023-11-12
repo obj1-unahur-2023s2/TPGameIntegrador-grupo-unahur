@@ -1,6 +1,7 @@
 import wollok.game.*
 import shove.*
 import direcciones.*
+import niveles.*
 
 class Objeto{
 	var property position
@@ -13,11 +14,13 @@ class Ladrillo inherits Objeto {
 }
 
 class Objetivo inherits Objeto {
+	const property invisibles = []
 	var property image =  "objetivo (punto).png"
-	method cambiarColorDeCaja() { game.onCollideDo(self, {c => c.pintarCaja() }) }
+	method cambiarColorDeCaja() { game.onCollideDo(self, {c => c.pintarCaja() if (nivelUno.completado()) { nivelUno.pasarANivel2() }}) 
+		
+	}
 	method pintarCaja(){}
 	method aniadirInvisibles() { 
-		const invisibles = []
 		if (game.getObjectsIn(position.left(1)).size() == 0) { invisibles.add(new Invisible(position = position.left(1))) }
 		if (game.getObjectsIn(position.right(1)).size() == 0) { invisibles.add(new Invisible(position = position.right(1))) }
 		if (game.getObjectsIn(position.up(1)).size() == 0) { invisibles.add(new Invisible(position = position.up(1))) }
@@ -38,6 +41,8 @@ class Invisible inherits Objeto {
     	super()
     	self.cambiarColorDeCaja()
     }
+    method direccionActual() = shove.direccionActual()
+    method rebotar(){}
 }
 
 class Caja inherits Objeto {
@@ -59,6 +64,7 @@ class Caja inherits Objeto {
 		else { shove.rebotar() }
 		
 	}	
+	method estaEnObjetivo() = self.image() == "caja pintada.png"
 	method hayLadrilloHaciaCaja(direccion) = game.getObjectsIn(direccion).any({l => l.image() == "Ladrillo.png"})
 	method noSePuedenMover() { if (self.hayMuchasCajas() or self.hayLadrilloHaciaCaja(self.posicionSiguiente())) { shove.shoveRebotar() } else { self.serEmpujado() }}
 	method hayMuchasCajas() = shove.direccionActual().esIgual(direccionActual) and game.getObjectsIn(self.posicionSiguiente()).any({el => el.image() == image})

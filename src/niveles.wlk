@@ -4,12 +4,10 @@ import objetos.*
 
 object nivelUno{
 	const ladrillos = []
-	const cajas = []
+	const property cajas = []
 	const objetivos = []
-	
 	method agregarFilaDeLadrillos(desde, hasta , y){ (desde..hasta).forEach({x => ladrillos.add(new Ladrillo(position = game.at(x,y)))}) }
 	method agregarColumnaDeLadrillos(desde, hasta , x) { (desde..hasta).forEach({y => ladrillos.add(new Ladrillo(position = game.at(x,y)))}) }
-	
 	method agregarLadrillos() {
 		self.agregarColumnaDeLadrillos(1, 14,0)
 		self.agregarColumnaDeLadrillos(3, 10, 13)
@@ -39,6 +37,21 @@ object nivelUno{
 		objetivos.forEach{x=>x.iniciar()}
 	}
 	
+	method borrar(){
+		ladrillos.forEach({l => game.removeVisual(l)})
+		cajas.forEach({c => game.removeVisual(c)})
+		objetivos.forEach({o => o.invisibles().forEach({i => game.removeVisual(i)})})	
+		objetivos.forEach({o => game.removeVisual(o)})
+	    game.removeVisual(shove) 
+	    
+	}
+	
+	method completado() = cajas.all({c => c.estaEnObjetivo()})
+	
+	method pasarANivel2() {
+		self.borrar()
+		nivelDos.iniciar()
+	} 
 	method iniciar(){
 		self.agregarLadrillos()
 		self.agregarObjetivos()
@@ -97,10 +110,11 @@ object nivelDos{
 	}
 	
 	method iniciar(){
-		shove.iniciar()
 		self.agregarLadrillos()
 		self.agregarObjetivos()
 		self.agregarCajas()
+		shove.position(game.center())
+		game.addVisual(shove)
    }
 		
 		
