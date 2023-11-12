@@ -47,7 +47,7 @@ object shove {
 		keyboard.right().onPressDo{self.moverDerecha()}
 		keyboard.up().onPressDo{self.moverArriba()}
 		keyboard.down().onPressDo{self.moverAbajo()}
-		keyboard.c().onPressDo{self.arrastrarCaja()}
+		keyboard.s().onPressDo{self.arrastrarCaja()}
 	}
 	method direccionEmpujando(){
 		if (direccionActual.esIgual(derecha)) { image = "derecha empujando caja.png"}

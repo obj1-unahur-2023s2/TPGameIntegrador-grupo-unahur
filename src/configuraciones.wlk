@@ -11,6 +11,7 @@ object juego {
 		game.width(15)
 	    game.height(15)
 	    inicio.iniciar()
+	    menuPausa.iniciar()
 		game.start()
 	}
 }

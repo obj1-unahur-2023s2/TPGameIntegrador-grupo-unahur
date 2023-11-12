@@ -79,6 +79,37 @@ class Caja inherits Objeto {
 	method rebotar() { position = self.posicionAnterior() }     
 }
 
+object menuPausa {
+	
+	method image() =
+		"menuPausa.png"
+	
+	method position()= game.at(5,8)
 
+	method configurarTecla(){
+		keyboard.p().onPressDo{
+			game.addVisual(self)
+			self.quitarConTiempo()
+		}
+	}
+	method quitar() {
+		game.removeVisual(self)
+	
+	}
+	method quitarConTiempo(){
+		game.schedule(5000,{self.quitar()})
+			}
+
+
+	
+	method iniciar(){
+		self.image()
+		self.position()
+		
+		self.configurarTecla()
+
+	}
+	
+}
 
 		
