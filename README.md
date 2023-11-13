@@ -14,8 +14,7 @@
 
 ## Reglas de Juego / Instrucciones
 
-(Escribirlas)
-
+  El juego consiste en llevar las cajas hacia los diferentes objetivos que hay en el mapa para avanzar de nivel. 
 
 ## Otros
 
