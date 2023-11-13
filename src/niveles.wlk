@@ -1,6 +1,7 @@
 import wollok.game.*
 import shove.*
 import objetos.*
+import inicio.*
 
 object nivelUno{
 	const ladrillos = []
@@ -60,6 +61,8 @@ object nivelUno{
 		self.agregarObjetivos()
 		shove.iniciar()
 		self.agregarCajas()
+		game.addVisual(informacionDeAyuda)
+		
    }
 		
 		
@@ -69,6 +72,9 @@ object nivelDos{
 	const ladrillos = []
 	const cajas = []
 	const objetivos = []
+	var property image = "finalizado.png"
+	var property position= game.origin()
+	var property existe = true
 	
 	method agregarFilaDeLadrillos(desde, hasta , y){ (desde..hasta).forEach({x => ladrillos.add(new Ladrillo(position = game.at(x,y)))}) }
 	method agregarColumnaDeLadrillos(desde, hasta , x) { (desde..hasta).forEach({y => ladrillos.add(new Ladrillo(position = game.at(x,y)))}) }
@@ -112,6 +118,12 @@ object nivelDos{
 		objetivos.forEach{x=>x.iniciar()}
 	}
 	
+	method completado() = cajas.all({c => c.estaEnObjetivo()})
+	
+	
+	method finalizarJuego() {
+		game.addVisual(self)
+	}
 	method iniciar(){
 		self.agregarLadrillos()
 		self.agregarObjetivos()
@@ -120,6 +132,7 @@ object nivelDos{
 		game.addVisual(shove)
    }
 		
+	
 		
 	}
 	

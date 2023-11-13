@@ -22,10 +22,9 @@ object inicio {
 	
 	
 	method iniciar(){ 
-		game.addVisual(self)		
+		game.addVisual(self)	
 		self.configurarTeclaInicio()
 		self.soundtrack()
 	}
 	
 }
-

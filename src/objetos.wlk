@@ -18,6 +18,8 @@ class Objetivo inherits Objeto {
 	const property invisibles = []
 	var property image =  "objetivo (punto).png"
 	method cambiarColorDeCaja() { game.onCollideDo(self, {c => c.pintarCaja() if (nivelUno.completado() and nivelUno.existe()) { nivelUno.pasarANivel2() }}) }
+	method finalizar() { game.onCollideDo(self, {c => c.pintarCaja() if (nivelDos.completado() and not nivelUno.existe()) { nivelDos.finalizarJuego() }}) }
+	
 	method pintarCaja(){}
 	method direccionActual() = shove.direccionActual().contrario()
 	method aniadirInvisibles() { 
@@ -26,11 +28,14 @@ class Objetivo inherits Objeto {
 		if (game.getObjectsIn(position.up(1)).size() == 0) { invisibles.add(new Invisible(position = position.up(1))) }
 		if (game.getObjectsIn(position.down(1)).size() == 0) { invisibles.add(new Invisible(position = position.down(1)))}
 		invisibles.forEach({i => i.iniciar()})
-	}       
+	} 
+	      
     override method iniciar() { 
     	super()
 		self.aniadirInvisibles()
 		self.cambiarColorDeCaja()
+		self.finalizar()
+		
 	}
 }
 
@@ -125,4 +130,13 @@ object imagenNivelCompleto{
 
 
 
+object informacionDeAyuda{
+	method text() = "Press P to help"
+	method position() = game.at(13,13)
+	method textColor()= paleta.blanco() 
+	}
+object paleta{
+		const property blanco =	"#FFFFFF"
+	
+}
 		
