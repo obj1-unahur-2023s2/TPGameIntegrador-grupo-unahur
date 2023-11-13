@@ -105,25 +105,24 @@ object menuPausa {
 	
 	}
 	method quitarConTiempo(){
-		game.schedule(5000,{self.quitar()})
-			}
-
-object imagenNivelCompleto{
-		var property image="nivelCompleto.jpg"
-		method position(){return game.at(0,0)}
-		method agregarImagen(){game.addVisual(self)}
-		method quitarConTiempo(){game.schedule(4000,{game.removeVisual(self)})}
-	}
-
-	
+		game.schedule(5000,{self.quitar()})}
+		
 	method iniciar(){
 		self.image()
 		self.position()
 		
 		self.configurarTecla()
 
-	}
-	
+	}	
 }
+
+object imagenNivelCompleto{
+		var property image="nivelCompleto.jpg"
+		method position(){return game.at(0,0)}
+		method agregarImagen(){game.addVisual(self)}
+		method quitarConTiempo(){game.schedule(4000,{game.removeVisual(self)})}
+}
+
+
 
 		

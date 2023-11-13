@@ -52,6 +52,8 @@ object nivelUno{
 	method pasarANivel2() {
 		self.borrar()
 		nivelDos.iniciar()
+		imagenNivelCompleto.agregarImagen()
+		imagenNivelCompleto.quitarConTiempo()
 	} 
 	method iniciar(){
 		self.agregarLadrillos()
