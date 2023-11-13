@@ -12,7 +12,7 @@ object inicio {
 		}
 	}}
 	method soundtrack(){
-	const rain = game.sound("soundtrack shove it.mp3")
+	const rain = game.sound("soundtrack shove It.mp3")
 	rain.shouldLoop(true)
 	keyboard.k().onPressDo({rain.pause()})
 	keyboard.j().onPressDo({rain.resume()})
