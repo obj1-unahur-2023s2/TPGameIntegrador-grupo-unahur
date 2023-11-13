@@ -108,6 +108,12 @@ object menuPausa {
 		game.schedule(5000,{self.quitar()})
 			}
 
+object imagenNivelCompleto{
+		var property image="nivelCompleto.jpg"
+		method position(){return game.at(0,0)}
+		method agregarImagen(){game.addVisual(self)}
+		method quitarConTiempo(){game.schedule(4000,{game.removeVisual(self)})}
+	}
 
 	
 	method iniciar(){
