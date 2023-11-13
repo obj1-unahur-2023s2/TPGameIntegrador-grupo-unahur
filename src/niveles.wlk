@@ -4,8 +4,9 @@ import objetos.*
 
 object nivelUno{
 	const ladrillos = []
-	const property cajas = []
+	const cajas = []
 	const objetivos = []
+	var property existe = true
 	method agregarFilaDeLadrillos(desde, hasta , y){ (desde..hasta).forEach({x => ladrillos.add(new Ladrillo(position = game.at(x,y)))}) }
 	method agregarColumnaDeLadrillos(desde, hasta , x) { (desde..hasta).forEach({y => ladrillos.add(new Ladrillo(position = game.at(x,y)))}) }
 	method agregarLadrillos() {
@@ -43,7 +44,7 @@ object nivelUno{
 		objetivos.forEach({o => o.invisibles().forEach({i => game.removeVisual(i)})})	
 		objetivos.forEach({o => game.removeVisual(o)})
 	    game.removeVisual(shove) 
-	    
+	    existe = false
 	}
 	
 	method completado() = cajas.all({c => c.estaEnObjetivo()})

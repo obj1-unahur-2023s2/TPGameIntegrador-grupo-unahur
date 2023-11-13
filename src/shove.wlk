@@ -42,6 +42,8 @@ object shove {
 	    }
 	}
 	method hayLadrilloHacia(direccion) = game.getObjectsIn(direccion).any({x => x.image() == "Ladrillo.png"}) 
+	method hayCajaHacia(direccion) = game.getObjectsIn(direccion).any({x => x.direccionActual().esIgual(direccionActual)}) 
+	method hayAlgoAtras() = self.hayCajaHacia(self.posicionAnterior()) or self.hayLadrilloHacia(self.posicionAnterior())
 	method configurarTeclas(){
 		keyboard.left().onPressDo{self.moverIzquierda()}
 		keyboard.right().onPressDo{self.moverDerecha()}
@@ -56,12 +58,14 @@ object shove {
 		else { image = "abajo empujando caja.png" }				
 	}
 	method shoveRebotar() { 
-		if (direccionActual.esIgual(derecha)) { position = position.left(1) }
-		else if (direccionActual.esIgual(izquierda)) { position = position.right(1) }
-		else if (direccionActual.esIgual(arriba)) { position = position.down(1) }
-		else { position = position.up(1) } 
+		if (not(self.hayAlgoAtras())) { position = self.posicionAnterior() }
 	}          
-	
+	method posicionAnterior() {
+		if (direccionActual.esIgual(derecha)) { return position.left(1) }
+		else if (direccionActual.esIgual(izquierda)) { return position.right(1) }
+		else if (direccionActual.esIgual(arriba)) { return position.down(1) }
+		else { return position.up(1) } 
+	}
 	method posicionSiguiente() {
 		if (direccionActual.esIgual(derecha)) { return position.right(1) }
 		else if (direccionActual.esIgual(izquierda)) { return position.left(1) }

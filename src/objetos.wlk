@@ -11,15 +11,15 @@ class Objeto{
 
 class Ladrillo inherits Objeto { 
 	method image() = "Ladrillo.png"
+	method direccionActual() = shove.direccionActual().contrario()
 }
 
 class Objetivo inherits Objeto {
 	const property invisibles = []
 	var property image =  "objetivo (punto).png"
-	method cambiarColorDeCaja() { game.onCollideDo(self, {c => c.pintarCaja() if (nivelUno.completado()) { nivelUno.pasarANivel2() }}) 
-		
-	}
+	method cambiarColorDeCaja() { game.onCollideDo(self, {c => c.pintarCaja() if (nivelUno.completado() and nivelUno.existe()) { nivelUno.pasarANivel2() }}) }
 	method pintarCaja(){}
+	method direccionActual() = shove.direccionActual().contrario()
 	method aniadirInvisibles() { 
 		if (game.getObjectsIn(position.left(1)).size() == 0) { invisibles.add(new Invisible(position = position.left(1))) }
 		if (game.getObjectsIn(position.right(1)).size() == 0) { invisibles.add(new Invisible(position = position.right(1))) }
@@ -41,14 +41,14 @@ class Invisible inherits Objeto {
     	super()
     	self.cambiarColorDeCaja()
     }
-    method direccionActual() = shove.direccionActual()
     method rebotar(){}
+    method direccionActual() = shove.direccionActual().contrario()
 }
 
 class Caja inherits Objeto {
-	var property image = "caja sin pintar.png" 
 	var property direccionActual = shove.direccionActual()
-		override method serEmpujado(){
+	var property image = "caja sin pintar.png" 
+	override method serEmpujado(){
 		if (shove.direccionActual().esIgual(derecha) and not self.hayLadrilloHaciaCaja(position.right(1))) {
 			position = position.right(1)
 		}
