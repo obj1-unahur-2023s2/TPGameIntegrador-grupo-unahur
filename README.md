@@ -9,8 +9,8 @@
 - Seoane Magali
 
 ## Capturas
+<img src = ![Captura de pantalla -2023-11-13 09-57-52(1)](https://github.com/obj1-unahur-2023s2/TPGameIntegrador-grupo-unahur/assets/134537619/1975abed-20ae-459e-9ca8-caa979d461fb)></img>
 
-(agregar)
 
 ## Reglas de Juego / Instrucciones
 
