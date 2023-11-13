@@ -94,8 +94,10 @@ object menuPausa {
 
 	method configurarTecla(){
 		keyboard.p().onPressDo{
-			game.addVisual(self)
-			self.quitarConTiempo()
+			if (not game.hasVisual(self)) {
+				game.addVisual(self)
+			    self.quitarConTiempo()
+			}
 		}
 	}
 	method quitar() {
