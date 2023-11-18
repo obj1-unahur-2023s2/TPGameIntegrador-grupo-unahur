@@ -5,4 +5,5 @@ import objetos.*
 
 program iniciar {
 	juego.configurar()
+	game.start()
 }

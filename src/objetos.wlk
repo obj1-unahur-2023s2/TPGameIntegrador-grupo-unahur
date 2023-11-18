@@ -73,70 +73,9 @@ class Caja inherits Objeto {
 	method hayLadrilloHaciaCaja(direccion) = game.getObjectsIn(direccion).any({l => l.image() == "Ladrillo.png"})
 	method noSePuedenMover() { if (self.hayMuchasCajas() or self.hayLadrilloHaciaCaja(self.posicionSiguiente())) { shove.shoveRebotar() } else { self.serEmpujado() }}
 	method hayMuchasCajas() = shove.direccionActual().esIgual(direccionActual) and game.getObjectsIn(self.posicionSiguiente()).any({el => el.image() == image})
-	method posicionSiguiente() {
-		if (direccionActual.esIgual(derecha)) { return position.right(1) }
-		else if (direccionActual.esIgual(izquierda)) { return position.left(1) }
-		else if (direccionActual.esIgual(arriba)) { return position.up(1) }
-		else { return position.down(1) }
-	}
-	method posicionAnterior() {
-		if (direccionActual.esIgual(derecha)) { return position.left(1) }
-		else if (direccionActual.esIgual(izquierda)) { return position.right(1) }
-		else if (direccionActual.esIgual(arriba)) { return position.down(1) }
-		else { return position.up(1) } 
-	}
+	method posicionSiguiente() = direccionActual.posSiguiente(position)
+	method posicionAnterior() = direccionActual.posAnterior(position)
 	method pintarCaja() { self.image("caja pintada.png") }
 	method despintarCaja() { self.image("caja sin pintar.png") }        
 	method rebotar() { position = self.posicionAnterior() }     
 }
-
-object menuPausa {
-	
-	method image() =
-		"menuPausa.png"
-	
-	method position()= game.at(5,8)
-
-	method configurarTecla(){
-		keyboard.p().onPressDo{
-			if (not game.hasVisual(self)) {
-				game.addVisual(self)
-			    self.quitarConTiempo()
-			}
-		}
-	}
-	method quitar() {
-		game.removeVisual(self)
-	
-	}
-	method quitarConTiempo(){
-		game.schedule(5000,{self.quitar()})}
-		
-	method iniciar(){
-		self.image()
-		self.position()
-		
-		self.configurarTecla()
-
-	}	
-}
-
-object imagenNivelCompleto{
-		var property image="nivelCompleto.jpg"
-		method position(){return game.at(0,0)}
-		method agregarImagen(){game.addVisual(self)}
-		method quitarConTiempo(){game.schedule(4000,{game.removeVisual(self)})}
-}
-
-
-
-object informacionDeAyuda{
-	method text() = "Press P to help"
-	method position() = game.at(13,13)
-	method textColor()= paleta.blanco() 
-	}
-object paleta{
-		const property blanco =	"#FFFFFF"
-	
-}
-		

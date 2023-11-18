@@ -1,16 +1,40 @@
 import wollok.game.*
 import shove.*
 import objetos.*
-import inicio.*
+import portadas.*
 
-object nivelUno{
+class Nivel {
 	const ladrillos = []
 	const cajas = []
 	const objetivos = []
 	var property existe = true
 	method agregarFilaDeLadrillos(desde, hasta , y){ (desde..hasta).forEach({x => ladrillos.add(new Ladrillo(position = game.at(x,y)))}) }
 	method agregarColumnaDeLadrillos(desde, hasta , x) { (desde..hasta).forEach({y => ladrillos.add(new Ladrillo(position = game.at(x,y)))}) }
-	method agregarLadrillos() {
+	method borrar(){
+		ladrillos.forEach({l => game.removeVisual(l)})
+		cajas.forEach({c => game.removeVisual(c)})
+		objetivos.forEach({o => o.invisibles().forEach({i => game.removeVisual(i)})})	
+		objetivos.forEach({o => game.removeVisual(o)})
+	    game.removeVisual(shove) 
+	    game.removeVisual(informacionDeAyuda)
+	    existe = false
+	}
+	method completado() = cajas.all({c => c.estaEnObjetivo()})
+	method agregarLadrillos(){}
+	method agregarCajas(){}
+	method agregarObjetivos(){}
+	method iniciar(){
+		self.agregarLadrillos()
+		self.agregarObjetivos()
+		shove.iniciar()
+		self.agregarCajas()
+		game.addVisual(informacionDeAyuda)
+		
+   }
+}
+
+object nivelUno inherits Nivel{
+	override method agregarLadrillos() {
 		self.agregarColumnaDeLadrillos(1, 14,0)
 		self.agregarColumnaDeLadrillos(3, 10, 13)
 		self.agregarColumnaDeLadrillos(11, 13,10)
@@ -24,14 +48,14 @@ object nivelUno{
 		ladrillos.forEach({l => l.iniciar()})
 	}
 	
-	method agregarCajas(){
+	override method agregarCajas(){
 		cajas.add (new Caja(position= game.at(8,7)))
 		cajas.add (new Caja(position= game.at(9,7)))
 		cajas.add (new Caja(position= game.at(10,7)))
 		cajas.add (new Caja(position= game.at(11,7)))
 		cajas.forEach({x=>x.iniciar()})	
 	}
-	method agregarObjetivos(){
+	override method agregarObjetivos(){
 		objetivos.add(new Objetivo(position =game.at (12,12)))
 		objetivos.add(new Objetivo(position =game.at (8,12)))
 		objetivos.add(new Objetivo(position =game.at (3,7)))
@@ -39,47 +63,17 @@ object nivelUno{
 		objetivos.forEach{x=>x.iniciar()}
 	}
 	
-	method borrar(){
-		ladrillos.forEach({l => game.removeVisual(l)})
-		cajas.forEach({c => game.removeVisual(c)})
-		objetivos.forEach({o => o.invisibles().forEach({i => game.removeVisual(i)})})	
-		objetivos.forEach({o => game.removeVisual(o)})
-	    game.removeVisual(shove) 
-	    existe = false
-	}
-	
-	method completado() = cajas.all({c => c.estaEnObjetivo()})
-	
 	method pasarANivel2() {
 		self.borrar()
 		nivelDos.iniciar()
 		imagenNivelCompleto.agregarImagen()
 		imagenNivelCompleto.quitarConTiempo()
-	} 
-	method iniciar(){
-		self.agregarLadrillos()
-		self.agregarObjetivos()
-		shove.iniciar()
-		self.agregarCajas()
-		game.addVisual(informacionDeAyuda)
-		
-   }
-		
-		
-	}
+	} 	
+}
 
-object nivelDos{
-	const ladrillos = []
-	const cajas = []
-	const objetivos = []
-	var property image = "finalizado.png"
-	var property position= game.origin()
-	var property existe = true
+object nivelDos inherits Nivel {
 	
-	method agregarFilaDeLadrillos(desde, hasta , y){ (desde..hasta).forEach({x => ladrillos.add(new Ladrillo(position = game.at(x,y)))}) }
-	method agregarColumnaDeLadrillos(desde, hasta , x) { (desde..hasta).forEach({y => ladrillos.add(new Ladrillo(position = game.at(x,y)))}) }
-	
-	method agregarLadrillos() {
+	override method agregarLadrillos() {
 		self.agregarFilaDeLadrillos(3, 10, 4)
 		self.agregarFilaDeLadrillos(5, 7, 9)
 		self.agregarFilaDeLadrillos(10, 13, 10)
@@ -99,7 +93,7 @@ object nivelDos{
 		ladrillos.forEach({l => l.iniciar()})
 	}
 	
-	method agregarCajas(){
+	override method agregarCajas(){
 		cajas.add (new Caja(position= game.at(6,8)))
 		cajas.add (new Caja(position= game.at(9,6)))
 		cajas.add (new Caja(position= game.at(9,8)))
@@ -108,7 +102,7 @@ object nivelDos{
 		cajas.add (new Caja(position= game.at(7,10)))
 		cajas.forEach({x=>x.iniciar()})	
 	}
-	method agregarObjetivos(){
+	override method agregarObjetivos(){
 		objetivos.add(new Objetivo(position =game.at (4,5)))
 		objetivos.add(new Objetivo(position =game.at (3,6)))
 		objetivos.add(new Objetivo(position =game.at (10,11)))
@@ -118,23 +112,20 @@ object nivelDos{
 		objetivos.forEach{x=>x.iniciar()}
 	}
 	
-	method completado() = cajas.all({c => c.estaEnObjetivo()})
-	
-	
 	method finalizarJuego() {
-		game.addVisual(self)
+		game.addVisual(pantallaFinal)
 	}
-	method iniciar(){
+	
+	override method iniciar(){
 		self.agregarLadrillos()
 		self.agregarObjetivos()
-		self.agregarCajas()
-		shove.position(game.center())
 		game.addVisual(shove)
+		self.agregarCajas()
+		game.addVisual(informacionDeAyuda)
+		
    }
 		
-	
-		
-	}
+}
 	
 	
 	

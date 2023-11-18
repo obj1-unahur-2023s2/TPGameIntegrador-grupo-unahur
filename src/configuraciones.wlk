@@ -2,7 +2,7 @@ import shove.*
 import objetos.*
 import wollok.game.*
 import niveles.*
-import inicio.*
+import portadas.*
 
 object juego {
 	method configurar(){
@@ -12,9 +12,6 @@ object juego {
 	    game.height(15)
 	    inicio.iniciar()
 		menuPausa.iniciar()
-	    game.start()
-		game.start()
-
 }
 
 }

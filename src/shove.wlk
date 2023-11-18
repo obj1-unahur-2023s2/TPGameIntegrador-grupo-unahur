@@ -60,18 +60,8 @@ object shove {
 	method shoveRebotar() { 
 		if (not(self.hayAlgoAtras())) { position = self.posicionAnterior() }
 	}          
-	method posicionAnterior() {
-		if (direccionActual.esIgual(derecha)) { return position.left(1) }
-		else if (direccionActual.esIgual(izquierda)) { return position.right(1) }
-		else if (direccionActual.esIgual(arriba)) { return position.down(1) }
-		else { return position.up(1) } 
-	}
-	method posicionSiguiente() {
-		if (direccionActual.esIgual(derecha)) { return position.right(1) }
-		else if (direccionActual.esIgual(izquierda)) { return position.left(1) }
-		else if (direccionActual.esIgual(arriba)) { return position.up(1) }
-		else { return position.down(1) }
-	}
+	method posicionAnterior() = direccionActual.posAnterior(position)
+	method posicionSiguiente() = direccionActual.posSiguiente(position)
 	method empujarCaja() { 
 		game.onCollideDo(self, {el => 
 			if(el.image() == "caja sin pintar.png" or el.image() == "caja pintada.png"){
